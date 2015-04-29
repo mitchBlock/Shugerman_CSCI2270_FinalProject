@@ -11,51 +11,45 @@ prefixDictionary::~prefixDictionary()
 {
     //dtor
 }
-
-void prefixDictionary::addWord(string word)
+void::prefixDictionary::addWordPublic(string word)
 {
-    node* newNode = new node;
-    newNode->word = word;
-
-    newNode->l = NULL;
-    newNode->r = NULL;
-
-    node* tracer = root;
-    node* parent = NULL;
-
-    while(tracer != NULL)
+    node* z = new node;
+    addWord(root, z);
+}
+void prefixDictionary::addWord(node* root, node* z)
+{
+    node* x = root;
+    node* p = NULL;
+    while(x != NULL)
     {
-        parent = tracer;
-
-        if(word.compare(tracer->word) < 0)
-           {
-               tracer = tracer->l;
-           }
+        p = x;
+        if(z->word.compare(x->word) < 0)
+        {
+            x = x->l;
+        }
         else
-            {
-                tracer = tracer->r;
-            }
+        {
+            x = x->r;
+        }
     }
-
-    newNode->p = parent;
-
-    if (parent == NULL)
+    z->p = p;
+    if(p == NULL)
     {
-        root = newNode;
+        root = z;
     }
-
+    else if(z->word.compare(x->word) < 0)
+    {
+        p->l = z;
+    }
     else
     {
-        if (word.compare(tracer->word) < 0)
-        {
-            parent->l = newNode;
-        }
-
-        if (word.compare(tracer->word) > 0)
-        {
-            parent->r = newNode;
-        }
+        p->r = z;
     }
+}
+
+int prefixDictionary::isWordPublic(string word)
+{
+    return isWord(root, word);
 }
 
 int prefixDictionary::isWord(node* subTree, string word)
