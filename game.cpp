@@ -5,7 +5,6 @@
 
 using namespace std;
 
-
 game::game()
 {
     //ctor
@@ -16,6 +15,23 @@ game::~game()
     //dtor
 }
 
+void game::defineBoard(vector<char> letters)
+{
+    int v = 0;
+    for(int i = 0; i < 4; i++)
+    {
+        for(int j = 0; j < 4; j++)
+        {
+            tile* root = new tile;
+            root->letter = letters[v];
+            root->visited = false;
+            root->prev = NULL;
+            board[i][j] = root;
+            v++;
+        }
+    }
+
+}
 
 void game::fillBoard()
 {
@@ -31,6 +47,8 @@ void game::fillBoard()
             char randChar = 'a' + randInt;
             tile* root = new tile;
             root->letter = randChar;
+            root->visited = false;
+            root->prev = NULL;
             board[i][j] = root;
         }
     }
@@ -46,7 +64,6 @@ void game::printBoard()
         }
         cout<<endl;
     }
-
 }
 
 void game::buildTree(tile* prev, int i, int j)
@@ -55,35 +72,80 @@ void game::buildTree(tile* prev, int i, int j)
     {
         board[i][j]->visited = true;
 
-        tile* newTile;
-        newTile = new tile;
+        tile* newTile = new tile;
         newTile->letter = board[i][j]->letter;
         newTile->prev = prev;
 
-        if(prev!= NULL)
+        if(prev != NULL)
         {
-            tails.push_back(newTile);
+            if(prev->prev != NULL)
+            {
+               // if prefixDictionary::isPrefixPublic(newTile)
+               // tails.push_back(newTile);
+            }
+
         }
 
-        if(i > 0)
+        if(i == 0 and j == 0) // top left corner
         {
-            i--;
-            buildTree(newTile, i, j);
+            buildTree(newTile, 1, 0);
+            buildTree(newTile, 0, 1);
+            buildTree(newTile, 1 ,1);
         }
-        if(i < 3)
+        else if(i == 0) // top
         {
-            i++;
-            buildTree(newTile, i, j);
+            buildTree(newTile, i, j + 1);
+            buildTree(newTile, i + 1, j + 1);
+            buildTree(newTile, i + 1, j);
+            buildTree(newTile, i + 1, j - 1);
+            buildTree(newTile, i, j - 1);
         }
-        if(j > 0)
+        else if(i == 0 and j == 3) // top right
         {
-            j--;
-            buildTree(newTile, i, j);
+            buildTree(newTile, 0, 2);
+            buildTree(newTile, 1, 2);
+            buildTree(newTile, 1, 3);
         }
-        if(j < 3)
+        else if(j == 3) //right
         {
-            j++;
-            buildTree(newTile, i, j);
+            buildTree(newTile, i - 1, j);
+            buildTree(newTile, i - 1, j - 1);
+            buildTree(newTile, i, j - 1);
+            buildTree(newTile, i + 1, j - 1);
+            buildTree(newTile, i + 1, j);
+        }
+        else if(j == 3 and i == 3) //bottom right
+        {
+            buildTree(newTile, 2, 3);
+            buildTree(newTile, 2, 2);
+            buildTree(newTile, 3, 2);
+        }
+        else if(i == 3) // bottom
+        {
+            buildTree(newTile, i, j + 1);
+            buildTree(newTile, i - 1, j + 1);
+            buildTree(newTile, i - 1, j);
+            buildTree(newTile, i - 1, j - 1);
+            buildTree(newTile, i, j - 1);
+        }
+        else if(j == 0) // left
+        {
+            buildTree(newTile, i - 1, j);
+            buildTree(newTile, i - 1, j + 1);
+            buildTree(newTile, i, j + 1);
+            buildTree(newTile, i + 1, j + 1);
+            buildTree(newTile, i + 1, j);
+        }
+        else
+        {
+            buildTree(newTile, i - 1, j);
+            buildTree(newTile, i - 1, j + 1);
+            buildTree(newTile, i, j + 1);
+            buildTree(newTile, i + 1, j + 1);
+            buildTree(newTile, i + 1, j);
+            buildTree(newTile, i + 1, j - 1);
+            buildTree(newTile, i, j - 1);
+            buildTree(newTile, i - 1, j - 1);
         }
     }
 }
