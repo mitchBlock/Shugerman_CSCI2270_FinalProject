@@ -5,7 +5,7 @@ The game class represents the game board (a 4x4 array of tile pointers) and all 
       	Assigns random letters to each of the 16 tiles.
       
       void game::defineBoard(vector<char>)
-      	Assigns letters based on user input.
+      	Assigns a letter to each tile based on user input.
       
       
       void game::buildTree(tile* prev, int i, int j) 
@@ -14,7 +14,7 @@ The game class represents the game board (a 4x4 array of tile pointers) and all 
       	For each node added, calls isPrefixPublic()to check if it should continue (i.e.,call itself on neighbors).
       	For each node added, calls isWordPublic()to check if a word has been formed. If true, the word is added to a vector to print.
       	To generate the string to pass to these functions, game::buildWord(tile* newTile) steps back through the tree, appending each node's letter to a vector, reverses the vector, and converts to a string.
-
+	This function is not currently working -- it only creates one path, rather than the full tree. I think this has to do with my method of checking if a tile has been visited.
 
 
 The prefixDictionary class holds a binary search tree filled with all (non-technical, ~100,000) english words that can be used in boggle (between 3 and 16 letters, inclusive).
