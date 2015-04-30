@@ -15,13 +15,14 @@ class prefixDictionary
     public:
         prefixDictionary();
         virtual ~prefixDictionary();
-        void addWordPublic(std::string word);
-        int isWordPublic(std::string word);
+        void addWord(std::string word);
+        bool isWordPublic(std::string word);
+        bool isPrefixPublic(std::string word);
 
     protected:
     private:
-        void addWord(node* root, node* z);
-        int isWord(node* root, std::string word);
+        bool isWord(node* root, std::string word);
+        bool isPrefix(node* root, std::string word);
         node* root;
 };
 
