@@ -7,12 +7,13 @@
 struct tile
 {
     char letter;
-    tile* prev = NULL;
+    tile* prev;
     tile* a;
     tile* b;
     tile* c;
-    bool visited = false;
+    bool visited;
 };
+
 
 class game
 {
@@ -23,11 +24,13 @@ class game
         void printBoard();
         void buildTree(tile* prev, int i, int j);
         void printPath();
+        void defineBoard(std::vector<char> letters);
     protected:
     private:
         tile* board[4][4];
         std::vector<tile*> tails;
 };
+
 
 
 #endif // GAME_H
