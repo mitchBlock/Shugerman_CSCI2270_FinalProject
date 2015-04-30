@@ -1,0 +1,32 @@
+/*
+The game class represents the game board (a 4x4 array of tile pointers) and all functionality associated with it.
+
+      void game::fillBoard()
+      	Assigns random letters to each of the 16 tiles.
+      
+      void game::defineBoard(vector<char>)
+      	Assigns letters based on user input.
+      
+      
+      void game::buildTree(tile* prev, int i, int j) 
+      	Starting with the tile at board[i][j], builds tree representing possible paths from (i,j).
+      	Works recursively, calls itself on each tile adjacent to board[i][j]. Sets pointers to previous node.
+      	For each node added, calls isPrefixPublic()to check if it should continue (i.e.,call itself on neighbors).
+      	For each node added, calls isWordPublic()to check if a word has been formed. If true, the word is added to a vector to print.
+      	To generate the string to pass to these functions, game::buildWord(tile* newTile) steps back through the tree, appending each node's letter to a vector, reverses the vector, and converts to a string.
+
+
+
+The prefixDictionary class holds a binary search tree filled with all (non-technical, ~100,000) english words that can be used in boggle (between 3 and 16 letters, inclusive).
+The words are inserted from a randomized (non-alphabetical) list to insure a balaned tree.
+
+      void prefixDictionary::addWord(string)
+      	Inserts word.
+      
+      bool prefixDictionary::isWordPublic(string)
+      	Calls recursive search to check if input is a valid word.
+      
+      bool prefixDictionary::isPrefixPublic(string)
+      	Calls recursive search to check if input is the beginning of a valid word. Currently does not work for all cases.
+
+	*/
