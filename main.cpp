@@ -9,6 +9,7 @@ int main()
 {
     prefixDictionary english;
     game boggle;
+    boggle.fillBoard();
 
     ifstream words("wordsEn.txt");
     string in_word;
@@ -27,8 +28,9 @@ int main()
         cout<<"-------------------------------------------"<<endl;
         cout<<"1. Generate new game board (random letters)"<<endl;
         cout<<"2. Define new game board (enter letters)"<<endl;
-        cout<<"3. Print possible words"<<endl;
-        cout<<"4. Quit"<<endl;
+        cout<<"3. Print game board"<<endl;
+        cout<<"4. Print possible words"<<endl;
+        cout<<"5. Quit"<<endl;
 
 
         cin >> choice;
@@ -54,14 +56,15 @@ int main()
         }
         if(choice == 3)
         {
-
+            boggle.printBoard();
+        }
+        if(choice == 4)
+        {
+            boggle.buildTree(NULL, 1, 1);
+            boggle.printPath();
         }
 
-    }while(choice != 4);
-
-
-
-
+    }while(choice != 5);
 
 
 }
