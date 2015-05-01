@@ -13,7 +13,7 @@ The game class represents the game board (a 4x4 array of tile pointers) and all 
       	Works recursively, calls itself on each tile adjacent to board[i][j]. Sets pointers to previous node.
       	For each node added, calls isPrefixPublic()to check if it should continue (i.e.,call itself on neighbors).
       	For each node added, calls isWordPublic()to check if a word has been formed. If true, the word is added to a vector to print.
-      	To generate the string to pass to these functions, game::buildWord(tile* newTile) steps back through the tree, appending each node's letter to a vector, reverses the vector, and converts to a string.
+      	To generate the string to pass to these functions, game::buildWord(tile* newTile) steps back through the tree, appending each node's letter to the beginning of the vector, and converts to a string.
 	This function is not currently working -- it only creates one path, rather than the full tree. I think this has to do with my method of checking if a tile has been visited.
 
 
@@ -27,6 +27,7 @@ The words are inserted from a randomized (non-alphabetical) list to insure a bal
       	Calls recursive search to check if input is a valid word.
       
       bool prefixDictionary::isPrefixPublic(string)
-      	Calls recursive search to check if input is the beginning of a valid word. Currently does not work for all cases.
+      	Calls recursive search to check if input is the beginning of a valid word.
+      	Currently does not work for all cases.
 
 	*/
