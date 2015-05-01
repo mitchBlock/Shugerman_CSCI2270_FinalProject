@@ -8,12 +8,9 @@ using namespace std;
 int main()
 {
     prefixDictionary english;
-    game boggle(&english);
-    boggle.fillBoard();
 
     ifstream words("wordsEn.txt");
     string in_word;
-
     while(getline(words,in_word))
     {
         if(in_word.length() > 2, in_word.length() < 17)
@@ -21,6 +18,10 @@ int main()
             english.addWord(in_word);
         }
     }
+
+    game boggle(&english);
+    boggle.fillBoard();
+
     int choice;
     do
     {
@@ -61,9 +62,20 @@ int main()
         }
         if(choice == 4)
         {
-            boggle.buildTree(NULL, 1, 1);
+            for(int i = 0; i < 4; i++)
+            {
+                for(int j = 0; j < 4; j++)
+                {
+                    boggle.buildTree(NULL, i,j);
+                }
+            }
+
+            boggle.printWords();
+            boggle.clearWords();
         }
 
     }while(choice != 5);
+
+    english.~prefixDictionary();
 
 }
