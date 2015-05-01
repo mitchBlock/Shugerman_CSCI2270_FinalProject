@@ -11,7 +11,7 @@ prefixDictionary::prefixDictionary()
 
 prefixDictionary::~prefixDictionary()
 {
-    //dtor
+    delete root;
 }
 
 void prefixDictionary::addWord(string word)
@@ -65,6 +65,11 @@ bool prefixDictionary::isPrefix(node* subTree, string word)
     if (subTree == NULL)
     {
         return false;
+    }
+
+    if(word.length() < 2 )
+    {
+        return true;
     }
 
     if(word.length() < subTree->word.length())
