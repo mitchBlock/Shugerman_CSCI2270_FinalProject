@@ -77,7 +77,6 @@ std::string game::buildWord(tile* letter)
         wordV.push_back(letter->letter);
         letter = letter->prev;
     }
-    reverse(wordV.begin(), wordV.end());
     string word(wordV.begin(), wordV.end());
     return word;
 }
