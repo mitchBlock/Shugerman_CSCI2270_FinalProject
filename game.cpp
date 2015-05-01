@@ -10,7 +10,7 @@ using namespace std;
 
 game::game(prefixDictionary* dict)
 {
-    prefixDictionary* english = dict;
+    english = dict;
 }
 
 game::~game()
@@ -69,6 +69,21 @@ void game::printBoard()
     }
 }
 
+bool game::checkVisited(tile* x)
+{
+    bool ans = false;
+    tile* y = x->prev;
+    while(y != NULL)
+    {
+        if(y == x)
+        {
+            ans = true;
+        }
+        y = y->prev;
+    }
+    return ans;
+}
+
 std::string game::buildWord(tile* letter)
 {
     vector<char> wordV;
@@ -83,9 +98,9 @@ std::string game::buildWord(tile* letter)
 
 void game::buildTree(tile* prev, int i, int j)
 {
-    if(board[i][j]->visited == false)
+    if(checkVisited(board[i][j]) == false)
     {
-        board[i][j]->visited = true;
+        //board[i][j]->visited = true;
 
         tile* newTile = new tile;
         newTile->letter = board[i][j]->letter;
@@ -176,6 +191,14 @@ void game::buildTree(tile* prev, int i, int j)
 
         }
 
+    }
+}
+
+void game::printWords()
+{
+    for(int i = 0; i < words.size(); i++)
+    {
+        cout<<words[i]<<endl;
     }
 }
 
