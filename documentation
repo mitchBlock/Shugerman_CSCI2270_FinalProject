@@ -15,8 +15,6 @@ The game class represents the game board (a 4x4 array of tile pointers) and all 
       	For each node added, calls isWordPublic()to check if a word has been formed. If true, the word is added to a vector to print.
       	To generate the string to pass to these functions, game::buildWord(tile* newTile) steps back through the tree, appending each node's letter to the beginning of the vector, and converts to a string.
 	
-	Unfortunately, isPrefix() rejects many valid prefixes so my program rarely finds words :(.
-	
 
 
 The prefixDictionary class holds a binary search tree filled with all (non-technical, ~100,000) english words that can be used in boggle (between 3 and 16 letters, inclusive).
