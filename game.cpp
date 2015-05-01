@@ -193,6 +193,10 @@ void game::buildTree(tile* prev, int i, int j)
 
     }
 }
+void game::clearWords()
+{
+    words.clear();
+}
 
 void game::printWords()
 {
