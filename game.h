@@ -27,6 +27,7 @@ class game
         void defineBoard(std::vector<char> letters);
         void buildTree(tile* prev, int i, int j);
         void printWords();
+        void clearWords();
     protected:
     private:
         prefixDictionary* english;
