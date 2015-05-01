@@ -8,7 +8,7 @@ using namespace std;
 int main()
 {
     prefixDictionary english;
-    game boggle;
+    game boggle(&english);
     boggle.fillBoard();
 
     ifstream words("wordsEn.txt");
@@ -24,6 +24,7 @@ int main()
     int choice;
     do
     {
+        cout<<"-------------------------------------------"<<endl;
         cout<<"Menu"<<endl;
         cout<<"-------------------------------------------"<<endl;
         cout<<"1. Generate new game board (random letters)"<<endl;
@@ -61,10 +62,8 @@ int main()
         if(choice == 4)
         {
             boggle.buildTree(NULL, 1, 1);
-            boggle.printPath();
         }
 
     }while(choice != 5);
-
 
 }
