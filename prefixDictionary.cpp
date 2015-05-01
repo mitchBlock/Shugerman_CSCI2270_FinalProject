@@ -67,14 +67,10 @@ bool prefixDictionary::isPrefix(node* subTree, string word)
         return false;
     }
 
-    if(word.length() < 2 )
-    {
-        return true;
-    }
 
     if(word.length() < subTree->word.length())
     {
-        string nodePrefix = subTree->word.substr(0,word.length() + 1);
+        string nodePrefix = subTree->word.substr(0,word.length());
         if(nodePrefix == word)
         {
             return true;
