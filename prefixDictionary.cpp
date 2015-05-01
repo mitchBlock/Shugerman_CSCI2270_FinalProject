@@ -27,6 +27,7 @@ void prefixDictionary::addWord(string word)
     if (root == NULL)
     {
         root = z;
+        root->p = NULL;
     }
     else
     {
@@ -77,12 +78,12 @@ bool prefixDictionary::isPrefix(node* subTree, string word)
 
     if(word.compare(subTree->word) < 0)
     {
-        return isWord(subTree->l, word);
+        return isPrefix(subTree->l, word);
     }
 
     if(word.compare(subTree->word) > 0)
     {
-        return isWord(subTree->r, word);
+        return isPrefix(subTree->r, word);
     }
 }
 
