@@ -7,6 +7,11 @@ struct node
     node* p;
     node* l;
     node* r;
+    ~node()
+    {
+        delete l;
+        delete r;
+    }
 };
 
 
@@ -18,6 +23,7 @@ class prefixDictionary
         void addWord(std::string word);
         bool isWordPublic(std::string word);
         bool isPrefixPublic(std::string word);
+        node* getRoot();
 
     protected:
     private:
