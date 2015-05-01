@@ -11,10 +11,12 @@ The game class represents the game board (a 4x4 array of tile pointers) and all 
       void game::buildTree(tile* prev, int i, int j) 
       	Starting with the tile at board[i][j], builds tree representing possible paths from (i,j).
       	Works recursively, calls itself on each tile adjacent to board[i][j]. Sets pointers to previous node.
-      	For each node added, calls isPrefixPublic()to check if it should continue (i.e.,call itself on neighbors).
+      	For each node added, calls isPrefixPublic() and checkVisited() to check if it should continue (i.e., call itself on neighbors).
       	For each node added, calls isWordPublic()to check if a word has been formed. If true, the word is added to a vector to print.
       	To generate the string to pass to these functions, game::buildWord(tile* newTile) steps back through the tree, appending each node's letter to the beginning of the vector, and converts to a string.
-	This function is not currently working -- it only creates one path, rather than the full tree. I think this has to do with my method of checking if a tile has been visited.
+	
+	Unfortunately, isPrefix() rejects many valid prefixes so my program rarely finds words :(.
+	
 
 
 The prefixDictionary class holds a binary search tree filled with all (non-technical, ~100,000) english words that can be used in boggle (between 3 and 16 letters, inclusive).
