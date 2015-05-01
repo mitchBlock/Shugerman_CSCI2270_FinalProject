@@ -2,6 +2,8 @@
 #define GAME_H
 #include <vector>
 #include <cstddef>
+#include <string>
+#include "prefixDictionary.h"
 
 
 struct tile
@@ -18,17 +20,18 @@ struct tile
 class game
 {
     public:
-        game();
+        game(prefixDictionary* dict);
         virtual ~game();
         void fillBoard();
         void printBoard();
-        void buildTree(tile* prev, int i, int j);
-        void printPath();
         void defineBoard(std::vector<char> letters);
+        void buildTree(tile* prev, int i, int j);
     protected:
     private:
+        prefixDictionary* english;
         tile* board[4][4];
-        std::vector<tile*> tails;
+        std::string buildWord(tile* letter);
+        std::vector<std::string> words;
 };
 
 
