@@ -2,12 +2,15 @@
 #include <random>
 #include <chrono>
 #include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
 
 using namespace std;
 
-game::game()
+game::game(prefixDictionary* dict)
 {
-    //ctor
+    prefixDictionary* english = dict;
 }
 
 game::~game()
@@ -66,6 +69,19 @@ void game::printBoard()
     }
 }
 
+std::string game::buildWord(tile* letter)
+{
+    vector<char> wordV;
+    while(letter != NULL)
+    {
+        wordV.push_back(letter->letter);
+        letter = letter->prev;
+    }
+    reverse(wordV.begin(), wordV.end());
+    string word(wordV.begin(), wordV.end());
+    return word;
+}
+
 void game::buildTree(tile* prev, int i, int j)
 {
     if(board[i][j]->visited == false)
@@ -78,90 +94,89 @@ void game::buildTree(tile* prev, int i, int j)
 
         if(prev != NULL)
         {
-            if(prev->prev != NULL)
+            if(prev->prev != NULL) // is more than 2 letters
             {
-               // if prefixDictionary::isPrefixPublic(newTile)
-               // tails.push_back(newTile);
+                string candidate = buildWord(newTile);
+                if(english->isWordPublic(candidate))
+                {
+                    words.push_back(candidate);
+                }
+            }
+        }
+        string candidate = buildWord(newTile);
+        if(english->isPrefixPublic(candidate))
+        {
+            if(i == 0 and j == 0) // top left corner
+            {
+                buildTree(newTile, 1, 0);
+                buildTree(newTile, 0, 1);
+                buildTree(newTile, 1 ,1);
+            }
+            else if(i == 0 and j!= 3 and j != 0) // top
+            {
+                buildTree(newTile, i, j + 1);
+                buildTree(newTile, i + 1, j + 1);
+                buildTree(newTile, i + 1, j);
+                buildTree(newTile, i + 1, j - 1);
+                buildTree(newTile, i, j - 1);
+            }
+            else if(i == 0 and j == 3) // top right
+            {
+                buildTree(newTile, 0, 2);
+                buildTree(newTile, 1, 2);
+                buildTree(newTile, 1, 3);
+            }
+            else if(j == 3 and i!= 3 and i != 0) //right
+            {
+                buildTree(newTile, i - 1, j);
+                buildTree(newTile, i - 1, j - 1);
+                buildTree(newTile, i, j - 1);
+                buildTree(newTile, i + 1, j - 1);
+                buildTree(newTile, i + 1, j);
+            }
+            else if(j == 3 and i == 3) //bottom right
+            {
+                buildTree(newTile, 2, 3);
+                buildTree(newTile, 2, 2);
+                buildTree(newTile, 3, 2);
+            }
+            else if(i == 3 and j!= 3 and j != 0) // bottom
+            {
+                buildTree(newTile, i, j + 1);
+                buildTree(newTile, i - 1, j + 1);
+                buildTree(newTile, i - 1, j);
+                buildTree(newTile, i - 1, j - 1);
+                buildTree(newTile, i, j - 1);
+            }
+            else if(i == 3 and j == 0) // bottom left
+            {
+                buildTree(newTile, 2, 0);
+                buildTree(newTile, 2, 1);
+                buildTree(newTile, 3, 1);
+
+            }
+            else if(j == 0 and i!= 3 and i != 0) // left
+            {
+                buildTree(newTile, i - 1, j);
+                buildTree(newTile, i - 1, j + 1);
+                buildTree(newTile, i, j + 1);
+                buildTree(newTile, i + 1, j + 1);
+                buildTree(newTile, i + 1, j);
+            }
+            else
+            {
+                buildTree(newTile, i - 1, j);
+                buildTree(newTile, i - 1, j + 1);
+                buildTree(newTile, i, j + 1);
+                buildTree(newTile, i + 1, j + 1);
+                buildTree(newTile, i + 1, j);
+                buildTree(newTile, i + 1, j - 1);
+                buildTree(newTile, i, j - 1);
+                buildTree(newTile, i - 1, j - 1);
             }
 
         }
 
-        if(i == 0 and j == 0) // top left corner
-        {
-            buildTree(newTile, 1, 0);
-            buildTree(newTile, 0, 1);
-            buildTree(newTile, 1 ,1);
-        }
-        else if(i == 0) // top
-        {
-            buildTree(newTile, i, j + 1);
-            buildTree(newTile, i + 1, j + 1);
-            buildTree(newTile, i + 1, j);
-            buildTree(newTile, i + 1, j - 1);
-            buildTree(newTile, i, j - 1);
-        }
-        else if(i == 0 and j == 3) // top right
-        {
-            buildTree(newTile, 0, 2);
-            buildTree(newTile, 1, 2);
-            buildTree(newTile, 1, 3);
-        }
-        else if(j == 3) //right
-        {
-            buildTree(newTile, i - 1, j);
-            buildTree(newTile, i - 1, j - 1);
-            buildTree(newTile, i, j - 1);
-            buildTree(newTile, i + 1, j - 1);
-            buildTree(newTile, i + 1, j);
-        }
-        else if(j == 3 and i == 3) //bottom right
-        {
-            buildTree(newTile, 2, 3);
-            buildTree(newTile, 2, 2);
-            buildTree(newTile, 3, 2);
-        }
-        else if(i == 3) // bottom
-        {
-            buildTree(newTile, i, j + 1);
-            buildTree(newTile, i - 1, j + 1);
-            buildTree(newTile, i - 1, j);
-            buildTree(newTile, i - 1, j - 1);
-            buildTree(newTile, i, j - 1);
-        }
-        else if(j == 0) // left
-        {
-            buildTree(newTile, i - 1, j);
-            buildTree(newTile, i - 1, j + 1);
-            buildTree(newTile, i, j + 1);
-            buildTree(newTile, i + 1, j + 1);
-            buildTree(newTile, i + 1, j);
-        }
-        else
-        {
-            buildTree(newTile, i - 1, j);
-            buildTree(newTile, i - 1, j + 1);
-            buildTree(newTile, i, j + 1);
-            buildTree(newTile, i + 1, j + 1);
-            buildTree(newTile, i + 1, j);
-            buildTree(newTile, i + 1, j - 1);
-            buildTree(newTile, i, j - 1);
-            buildTree(newTile, i - 1, j - 1);
-        }
     }
 }
 
-void game::printPath()
-{
-    cout<<tails.size()<<endl;
-    for(int i = 0; i < 3; i++)
-    {
-        tile* x = tails[i];
-        while(x != NULL)
-        {
-            cout<<x->letter;
-            x = x->prev;
-        }
-        cout<<endl;
-    }
-
-}
