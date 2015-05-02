@@ -10,7 +10,9 @@ struct node
     ~node()
     {
         delete l;
+        l = NULL;
         delete r;
+        r = NULL;
     }
 };
 
