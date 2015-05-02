@@ -10,9 +10,6 @@ struct tile
 {
     char letter;
     tile* prev;
-    tile* a;
-    tile* b;
-    tile* c;
     bool visited;
 };
 
@@ -31,7 +28,7 @@ class game
     protected:
     private:
         prefixDictionary* english;
-        bool checkVisited(tile* x);
+        bool checkVisited(tile* toCheck, tile* current);
         static node* root;
         tile* board[4][4];
         std::string buildWord(tile* letter);
